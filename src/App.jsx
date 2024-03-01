@@ -5,6 +5,9 @@ import axios from 'axios';
 import LoginForm from './components/ModuleThreeForms/LoginForm';
 import SearchBar from './components/ModuleThreeForms/SearchBar';
 import LangSwitcher from './components/ModuleThreeForms/LangSwitcher';
+import ArticleList from './components/ArticleList/ArticleList';
+import { fetchArticles } from './api';
+import SearchForm from './components/SearchForm/SearchForm';
 function App() {
   // ===== Не контролируемая форма =====
 
@@ -21,19 +24,19 @@ function App() {
   // ===== /Контролируемая форма =====
   // ===== HTTP запрос =====
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSearch = async newQuery => {
+    try {
+      setIsLoading(true);
+      setArticles([]);
+      const data = await fetchArticles(newQuery);
+      setArticles(data);
+      setIsLoading(false);
+    } catch (error) {}
+  };
 
-  useEffect(() => {
-    async function fetchArticles() {
-      const response = await axios.get(
-        'hn.algolia.com/api/v1/search?query=react'
-      );
-      setArticles(response.data.hits);
-    }
-    fetchArticles();
-  }, []);
-  // hn.algolia.com/api/v1/search?query=react
   // nfETKchrhu0QZJvrk5wEPWVq-5iCKjXTqUbWwdRMBwo
-  http: return (
+  return (
     <>
       {/* <h3>3 модуль, формы</h3>
       <h2>===== Не контролируемая форма =====</h2>
@@ -46,19 +49,19 @@ function App() {
       <p>Selected language: {lang}</p>
       <LangSwitcher value={lang} onSelect={setLang} /> */}
       <h3>HTTP запросы</h3>
-      {/* <div>
-        {articles.length > 0 && (
-          <ul>
-            {articles.map(article => {
-              <li key={article.objectID}>
-                <a href={article.url}>{article.title}</a>
-              </li>;
-            })}
-          </ul>
-        )}
-      </div> */}
+      <SearchForm onSearch={handleSearch} />
+      {isLoading && <p>Loading . . .</p>}
+      <div>{articles.length > 0 && <ArticleList items={articles} />}</div>
     </>
   );
 }
 
 export default App;
+
+//  useEffect(() => {
+//    async function getArticles() {
+//      const data = await fetchArticles();
+//      setArticles(data);
+//    }
+//    getArticles();
+//  }, []);
