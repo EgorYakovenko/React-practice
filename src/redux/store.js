@@ -1,7 +1,22 @@
-import { combineReducers, createStore } from 'redux';
-import { devToolsEnhancer } from '@redux-devtools/extension';
-import { balanceReduser } from './balanceSlise';
-import { localeReducer } from './localeSlice';
+import { configureStore } from '@reduxjs/toolkit';
+// import { combineReducers } from 'redux';
+// import { devToolsEnhancer } from '@redux-devtools/extension';
+import balanceReduser from './balanceSlise';
+import localeReducer from './localeSlice';
+
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+//REDUX
 
 // объявили начальное состояние приложения(слайс)
 // const initialState = {
@@ -13,10 +28,10 @@ import { localeReducer } from './localeSlice';
 //   },
 // };
 
-const rootReducer = combineReducers({
-  balance: balanceReduser,
-  locale: localeReducer,
-});
+// const rootReducer = combineReducers({
+//   balance: balanceReduser,
+//   locale: localeReducer,
+// });
 
 //объявили корневой редюсер(для изменения состояния и обновления интерфейса)
 // const rootReducer = (state = initialState, action) => {
@@ -53,6 +68,34 @@ const rootReducer = combineReducers({
 //   }
 // };
 
-const enhancer = devToolsEnhancer();
+// const enhancer = devToolsEnhancer();
 // объявили стор/принимает редюсер
-export const store = createStore(rootReducer, enhancer);
+// export const store = createStore(rootReducer);
+
+//REDUX TOOLKIT
+
+const balancePersistCfg = {
+  key: 'balance',
+  storage,
+  whitelist: ['value'],
+};
+
+const persistedBalanceReducer = persistReducer(
+  balancePersistCfg,
+  balanceReduser
+);
+
+export const store = configureStore({
+  reducer: {
+    balance: persistedBalanceReducer,
+    locale: localeReducer,
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
+export const persistor = persistStore(store);
