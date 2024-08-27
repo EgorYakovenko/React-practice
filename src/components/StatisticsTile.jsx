@@ -18,7 +18,6 @@ const container = {
   display: 'flex',
   justifyContent: 'flex-end',
   padding: '24px',
-  // gap: '24px',
 };
 
 const listContainer = {
@@ -60,8 +59,8 @@ function StatisticsTile() {
       <Box>
         <Card
           sx={{
-            maxWidth: 350,
-            borderRadius: 10,
+            width: 350,
+            borderRadius: 5,
             mr: '24px',
           }}
         >
