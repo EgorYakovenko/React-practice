@@ -54,7 +54,7 @@ const itemDescription = {
 
 const imgBox = {};
 
-function MaterialUi() {
+function StatisticsTile() {
   return (
     <Box sx={container}>
       <Box>
@@ -157,7 +157,7 @@ function MaterialUi() {
     </Box>
   );
 }
-export default MaterialUi;
+export default StatisticsTile;
 // secondary={'Secondary text'}
 
 // Statistic data tile size: 156px
