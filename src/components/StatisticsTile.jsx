@@ -18,6 +18,7 @@ const container = {
   display: 'flex',
   justifyContent: 'flex-end',
   padding: '24px',
+  flexGrow: 1,
 };
 
 const listContainer = {
@@ -51,7 +52,7 @@ const itemDescription = {
   color: '#555E68',
 };
 
-const imgBox = {};
+// const imgBox = {};
 
 function StatisticsTile() {
   return (
