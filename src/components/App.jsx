@@ -4,7 +4,9 @@ import LangSwitcher from './LangSwitcher';
 import { selectUpdate } from '../redux/localeSlice';
 import StatisticsTile from './StatisticsTile';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getPlanets } from '../api';
+import axios from 'axios';
 
 // Задание № 75 Реакт
 
@@ -113,22 +115,28 @@ import { useState } from 'react';
 // }
 // export default App;
 // ============================================================
-import Product from './Product';
+// import Product from './Product';
 
-const prods = [
-  { name: 'product1', cost: 100 },
-  { name: 'product2', cost: 200 },
-  { name: 'product3', cost: 300 },
-];
+// const prods = [
+//   { name: 'product1', cost: 100 },
+//   { name: 'product2', cost: 200 },
+//   { name: 'product3', cost: 300 },
+// ];
 
 function App() {
+  // useEffect(()=>)
+  // const data = axios.get(
+  //   'https://api.nasa.gov/planetary/apod?api_key=GjnIzDClyIs8vsisERhsQBGFsheVpl9FBRTGcY4k'
+  // );
+  // console.log(data);
+  const test = getPlanets();
+  console.log(test);
   return (
     <div>
-      <Product name={prods[0].name} cost={prods[0].cost} />
-      <Product name={prods[1].name} cost={prods[1].cost} />
-      <Product name={prods[2].name} cost={prods[2].cost} />
+      <p>hello</p>
     </div>
   );
 }
 
 export default App;
+// ============================================================
