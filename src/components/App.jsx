@@ -115,28 +115,96 @@ import axios from 'axios';
 // }
 // export default App;
 // ============================================================
-// import Product from './Product';
+// ====71====
+// const initDate = {
+//   year: 2025,
+//   month: 12,
+//   day: 31,
+// };
 
-// const prods = [
-//   { name: 'product1', cost: 100 },
-//   { name: 'product2', cost: 200 },
-//   { name: 'product3', cost: 300 },
-// ];
+// function App() {
+//   const [obj, setObj] = useState(initDate);
 
+//   function handleChange(prop, event) {
+//     // setObj({ ...obj, ...{ [prop]: event.target.value } });
+//     const copy = Object.assign({}, obj);
+
+//     copy[prop] = event.target.value;
+
+//     setObj(copy);
+//   }
+
+//   return (
+//     <div>
+//       <p>{obj.year}</p>
+//       <p>{obj.month}</p>
+//       <p>{obj.day}</p>
+//       <input value={obj.year} onChange={event => handleChange('year', event)} />
+//       <input
+//         value={obj.month}
+//         onChange={event => handleChange('month', event)}
+//       />
+//       <input value={obj.day} onChange={event => handleChange('day', event)} />
+//       <br />
+//       {obj.year}-{obj.month}-{obj.day}
+//     </div>
+//   );
+// }
+
+// export default App;
+// ============================================================
+// ====73====
+// Сделайте инпут и кнопку. По нажатию на кнопку пусть текст инпута станет новым тегом li в конец тега ul
+// function App() {
+//   const [notes, setNotes] = useState([1, 2, 3, 4, 5]);
+//   const [input, setInput] = useState('');
+
+//   function handleClick(event) {
+//     setNotes([...notes, input]);
+//     setInput('');
+//   }
+
+//   function handleChange(event) {
+//     setInput(event.target.value);
+//   }
+
+//   const result = notes.map((note, index) => {
+//     return <li key={index}>{note}</li>;
+//   });
+
+//   return (
+//     <div>
+//       <ul>{result}</ul>
+//       <input type="text" value={input} onChange={handleChange} />
+//       <button type="button" onClick={handleClick}>
+//         Button
+//       </button>
+//     </div>
+//   );
+// }
+// export default App;
+// ============================================================
+// ====74====
 function App() {
-  // useEffect(()=>)
-  // const data = axios.get(
-  //   'https://api.nasa.gov/planetary/apod?api_key=GjnIzDClyIs8vsisERhsQBGFsheVpl9FBRTGcY4k'
-  // );
-  // console.log(data);
-  const test = getPlanets();
-  console.log(test);
+  const [notes, setNotes] = useState([1, 2, 3, 4, 5]);
+
+  function doSmth(index) {
+    let copy = Object.assign([], notes);
+    copy[index] += '!';
+    setNotes(copy);
+  }
+
+  const result = notes.map((note, index) => {
+    return (
+      <li key={index} onClick={() => doSmth(index)}>
+        {note}
+      </li>
+    );
+  });
   return (
     <div>
-      <p>hello</p>
+      <ul>{result}</ul>
     </div>
   );
 }
-
 export default App;
-// ============================================================
